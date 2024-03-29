@@ -5,8 +5,20 @@ import { UpdateProductDTO } from '../dtos/updateProduct.dto';
 import { IProductsRepository } from './interface/IProducts.repository';
 
 export class ProductsRepository implements IProductsRepository {
-    async getProducts({ name, description, order_by, order }: GetProductsDTO) {
+    async getProducts({
+        name,
+        description,
+        order_by,
+        order,
+        page,
+        size,
+    }: GetProductsDTO) {
+        const take = Number(size);
+        const skip = Number(page) * take - take;
+
         const queryOptions = {
+            skip,
+            take,
             where: {
                 name,
                 description,
