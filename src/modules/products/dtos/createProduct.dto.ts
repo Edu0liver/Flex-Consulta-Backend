@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const createProductDTOSchema = z.object({
-    nome: z.string(),
-    descricao: z.string(),
+    name: z.string(),
+    description: z.string(),
     price: z.number().nonnegative(),
 });
 

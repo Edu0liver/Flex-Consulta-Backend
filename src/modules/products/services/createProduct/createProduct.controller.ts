@@ -1,18 +1,19 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import { CreateProductService } from './createProduct.service';
 import { createProductDTOSchema } from '../../dtos/createProduct.dto';
 
 export class CreateProductController {
-    constructor(private createProductService: CreateProductService) {}
-
     async handle(req: Request, res: Response) {
-        const { nome, descricao, price } = createProductDTOSchema.parse(
+        const { name, description, price } = createProductDTOSchema.parse(
             req.body,
         );
 
-        const product = await this.createProductService.execute({
-            nome,
-            descricao,
+        const createProductService = container.resolve(CreateProductService);
+
+        const product = await createProductService.execute({
+            name,
+            description,
             price,
         });
 

@@ -1,8 +1,13 @@
+import { inject, injectable } from 'tsyringe';
 import { CreateProductDTO } from '../../dtos/createProduct.dto';
 import { ProductsRepository } from '../../repository/products.repository';
 
+@injectable()
 export class CreateProductService {
-    constructor(private productsRepository: ProductsRepository) {}
+    constructor(
+        @inject('ProductsRepository')
+        private productsRepository: ProductsRepository,
+    ) {}
 
     async execute(data: CreateProductDTO) {
         try {

@@ -1,21 +1,11 @@
 import { Router } from 'express';
-import { GetProductsService } from '../../modules/products/services/getProducts/getProducts.service';
-import { ProductsRepository } from '../../modules/products/repository/products.repository';
 import { GetProductsController } from '../../modules/products/services/getProducts/getProducts.controller';
 import { CreateProductController } from '../../modules/products/services/createProduct/createProduct.controller';
-import { CreateProductService } from '../../modules/products/services/createProduct/createProduct.service';
 
 export const productsRoutes = Router();
 
-const productsRepository = new ProductsRepository();
-
-const getProductsService = new GetProductsService(productsRepository);
-const getProductsController = new GetProductsController(getProductsService);
-
-const createProductService = new CreateProductService(productsRepository);
-const createProductController = new CreateProductController(
-    createProductService,
-);
+const getProductsController = new GetProductsController();
+const createProductController = new CreateProductController();
 
 productsRoutes.get('/', getProductsController.handle);
 productsRoutes.post('/', createProductController.handle);

@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const getProductsSchema = z.object({
-    nome: z.string(),
-    descricao: z.string(),
+    name: z.string(),
+    description: z.string(),
     order_by: z.string(),
     order: z.string(),
 });

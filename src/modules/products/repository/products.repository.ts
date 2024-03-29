@@ -1,13 +1,15 @@
 import { prismaClient } from '../../../shared/database/prisma.service';
 import { CreateProductDTO } from '../dtos/createProduct.dto';
 import { GetProductsDTO } from '../dtos/getProducts.dto';
+import { IProductsRepository } from './interface/IProducts.repository';
 
-export class ProductsRepository {
-    async getProducts({ nome, descricao, order_by, order }: GetProductsDTO) {
+export class ProductsRepository implements IProductsRepository {
+    async getProducts({ name, description, order_by, order }: GetProductsDTO) {
         return await prismaClient.product.findMany({
             where: {
-                nome,
-                descricao,
+                name,
+                description,
+                deleted_at: null,
             },
             orderBy: {
                 [order_by]: {
@@ -17,11 +19,11 @@ export class ProductsRepository {
         });
     }
 
-    async createProduct({ nome, descricao, price }: CreateProductDTO) {
+    async createProduct({ name, description, price }: CreateProductDTO) {
         return await prismaClient.product.create({
             data: {
-                nome,
-                descricao,
+                name,
+                description,
                 price,
             },
         });
