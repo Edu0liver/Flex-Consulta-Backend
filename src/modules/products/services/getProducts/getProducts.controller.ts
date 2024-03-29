@@ -11,13 +11,13 @@ export class GetProductsController {
 
         const getProductsService = container.resolve(GetProductsService);
 
-        const products = await getProductsService.execute({
+        const { statusCode, data } = await getProductsService.execute({
             name,
             description,
             order_by,
             order,
         });
 
-        return res.json(products);
+        return res.status(statusCode).json(data);
     }
 }

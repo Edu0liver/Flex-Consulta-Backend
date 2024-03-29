@@ -1,4 +1,4 @@
-import { HttpException } from 'src/shared/error/HttpException';
+import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 import { GetProductsDTO } from '../../dtos/getProducts.dto';
 import { ProductsRepository } from '../../repository/products.repository';
 
@@ -7,10 +7,11 @@ export class GetProductsService {
 
     async execute(data: GetProductsDTO) {
         try {
-            return await this.productsRepository.getProducts(data);
-        } catch {
-            throw new HttpException('Erro ao buscar produtos', 500);
+            const products = await this.productsRepository.getProducts(data);
+
+            return new ResponseFormat(200, products);
+        } catch (error) {
+            return new ResponseFormat(500, { message: error.message });
         }
     }
 }
-

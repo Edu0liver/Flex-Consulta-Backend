@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { CreateProductDTO } from '../../dtos/createProduct.dto';
 import { ProductsRepository } from '../../repository/products.repository';
-import { HttpException } from 'src/shared/error/HttpException';
+import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 
 @injectable()
 export class CreateProductService {
@@ -12,9 +12,11 @@ export class CreateProductService {
 
     async execute(data: CreateProductDTO) {
         try {
-            return await this.productsRepository.createProduct(data);
-        } catch {
-            throw new HttpException('Erro ao criar produto', 500);
+            const product = await this.productsRepository.createProduct(data);
+
+            return new ResponseFormat(201, product);
+        } catch (error) {
+            return new ResponseFormat(500, { message: error.message });
         }
     }
 }

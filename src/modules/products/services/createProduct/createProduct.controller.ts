@@ -11,12 +11,12 @@ export class CreateProductController {
 
         const createProductService = container.resolve(CreateProductService);
 
-        const product = await createProductService.execute({
+        const { statusCode, data } = await createProductService.execute({
             name,
             description,
             price,
         });
 
-        return res.status(201).json(product);
+        return res.status(statusCode).json(data);
     }
 }
