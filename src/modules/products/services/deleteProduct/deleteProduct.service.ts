@@ -1,34 +1,27 @@
 import { inject, injectable } from 'tsyringe';
 import { ProductsRepository } from '../../repository/products.repository';
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
-import { updateProductSchema } from '../../dtos/updateProduct.dto';
-
-interface IRequest {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-}
+import {
+    DeleteProductSchema,
+    deleteProductSchema,
+} from '../../dtos/deleteProduct.dto';
 
 @injectable()
-export class UpdateProductService {
+export class DeleteProductService {
     constructor(
         @inject('ProductsRepository')
         private productsRepository: ProductsRepository,
     ) {}
 
-    async execute({ id, ...data }: IRequest): Promise<ResponseFormat> {
+    async execute({ id }: DeleteProductSchema): Promise<ResponseFormat> {
         try {
-            updateProductSchema.parse(data);
+            deleteProductSchema.parse({ id });
         } catch (error) {
             return new ResponseFormat(400, { message: error });
         }
 
         try {
-            const product = await this.productsRepository.updateProduct(
-                id,
-                data,
-            );
+            const product = await this.productsRepository.deleteProduct(id);
 
             return new ResponseFormat(204, product);
         } catch (error) {

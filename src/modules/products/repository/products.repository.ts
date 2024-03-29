@@ -49,11 +49,23 @@ export class ProductsRepository implements IProductsRepository {
         return await prismaClient.product.update({
             where: {
                 id,
+                deleted_at: null,
             },
             data: {
                 name,
                 description,
                 price,
+            },
+        });
+    }
+
+    async deleteProduct(id: string) {
+        return await prismaClient.product.update({
+            where: {
+                id,
+            },
+            data: {
+                deleted_at: new Date(),
             },
         });
     }
