@@ -5,17 +5,16 @@ import { Request, Response } from 'express';
 
 export class GetProductsController {
     async handle(req: Request, res: Response) {
-        const { name, description, order_by, order } = getProductsSchema.parse(
-            req.query,
-        );
+        console.log(req.query);
+        const { name, description, order_by, order } = req.query;
 
         const getProductsService = container.resolve(GetProductsService);
 
         const { statusCode, data } = await getProductsService.execute({
-            name,
-            description,
-            order_by,
-            order,
+            name: name as string,
+            description: description as string,
+            order_by: order_by as string,
+            order: order as string,
         });
 
         return res.status(statusCode).json(data);

@@ -1,5 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import { CreateProductDTO } from '../../dtos/createProduct.dto';
+import {
+    CreateProductDTO,
+    createProductDTOSchema,
+} from '../../dtos/createProduct.dto';
 import { ProductsRepository } from '../../repository/products.repository';
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 
@@ -11,6 +14,12 @@ export class CreateProductService {
     ) {}
 
     async execute(data: CreateProductDTO) {
+        try {
+            createProductDTOSchema.parse(data);
+        } catch (error) {
+            return new ResponseFormat(400, { message: error });
+        }
+
         try {
             const product = await this.productsRepository.createProduct(data);
 

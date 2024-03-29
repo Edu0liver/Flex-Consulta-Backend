@@ -5,9 +5,7 @@ import { createProductDTOSchema } from '../../dtos/createProduct.dto';
 
 export class CreateProductController {
     async handle(req: Request, res: Response) {
-        const { name, description, price } = createProductDTOSchema.parse(
-            req.body,
-        );
+        const { name, description, price } = req.body;
 
         const createProductService = container.resolve(CreateProductService);
 

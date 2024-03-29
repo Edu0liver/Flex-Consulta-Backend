@@ -5,18 +5,18 @@ import { IProductsRepository } from './interface/IProducts.repository';
 
 export class ProductsRepository implements IProductsRepository {
     async getProducts({ name, description, order_by, order }: GetProductsDTO) {
-        return await prismaClient.product.findMany({
+        const queryOptions = {
             where: {
                 name,
                 description,
                 deleted_at: null,
             },
             orderBy: {
-                [order_by]: {
-                    _count: order,
-                },
+                [order_by ?? 'created_at']: order ?? 'asc',
             },
-        });
+        };
+
+        return await prismaClient.product.findMany(queryOptions);
     }
 
     async createProduct({ name, description, price }: CreateProductDTO) {
