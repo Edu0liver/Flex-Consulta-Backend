@@ -17,6 +17,18 @@ export class GetProductsService {
             return new ResponseFormat(400, { message: error });
         }
 
+        if (
+            data.order_by &&
+            data.order_by !== 'name' &&
+            data.order_by !== 'description'
+        ) {
+            return new ResponseFormat(400, { message: 'Invalid order_by' });
+        }
+
+        if (data.order && data.order !== 'asc' && data.order !== 'desc') {
+            return new ResponseFormat(400, { message: 'Invalid order' });
+        }
+
         try {
             const products = await this.productsRepository.getProducts(data);
 
