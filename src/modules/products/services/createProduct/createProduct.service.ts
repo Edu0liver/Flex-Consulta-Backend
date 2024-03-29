@@ -8,7 +8,7 @@ export class CreateProductService {
         try {
             return await this.productsRepository.createProduct(data);
         } catch {
-            throw new Error('Erro ao buscar produtos');
+            throw new Error('Erro ao criar produto');
         }
     }
 }
