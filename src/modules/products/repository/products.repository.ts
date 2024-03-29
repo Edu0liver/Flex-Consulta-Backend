@@ -1,6 +1,7 @@
 import { prismaClient } from '../../../shared/database/prisma.service';
 import { CreateProductDTO } from '../dtos/createProduct.dto';
 import { GetProductsDTO } from '../dtos/getProducts.dto';
+import { UpdateProductDTO } from '../dtos/updateProduct.dto';
 import { IProductsRepository } from './interface/IProducts.repository';
 
 export class ProductsRepository implements IProductsRepository {
@@ -21,6 +22,22 @@ export class ProductsRepository implements IProductsRepository {
 
     async createProduct({ name, description, price }: CreateProductDTO) {
         return await prismaClient.product.create({
+            data: {
+                name,
+                description,
+                price,
+            },
+        });
+    }
+
+    async updateProduct(
+        id: string,
+        { name, description, price }: UpdateProductDTO,
+    ) {
+        return await prismaClient.product.update({
+            where: {
+                id,
+            },
             data: {
                 name,
                 description,

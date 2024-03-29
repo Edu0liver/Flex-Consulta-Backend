@@ -10,7 +10,7 @@ export class GetProductsService {
         private productsRepository: ProductsRepository,
     ) {}
 
-    async execute(data: GetProductsDTO) {
+    async execute(data: GetProductsDTO): Promise<ResponseFormat> {
         try {
             getProductsSchema.parse(data);
         } catch (error) {
