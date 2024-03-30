@@ -15,7 +15,7 @@ export class CreateUserService {
         try {
             createUserSchema.parse(data);
         } catch (error) {
-            throw new ResponseFormat(400, error.message);
+            return new ResponseFormat(400, error.message);
         }
 
         try {
@@ -24,17 +24,19 @@ export class CreateUserService {
             );
 
             if (userAlreadyExists) {
-                throw new ResponseFormat(400, 'User already exists');
+                return new ResponseFormat(400, {
+                    message: 'User already exists',
+                });
             }
 
             const salt = await genSalt(10);
             data.password = await hash(data.password, salt);
 
-            const user = await this.usersRepository.create(data);
+            const { id } = await this.usersRepository.create(data);
 
-            return new ResponseFormat(201, user);
+            return new ResponseFormat(201, { id });
         } catch (error) {
-            throw new ResponseFormat(500, error.message);
+            return new ResponseFormat(500, error.message);
         }
     }
 }

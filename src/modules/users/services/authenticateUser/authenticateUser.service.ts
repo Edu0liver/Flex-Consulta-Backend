@@ -22,20 +22,24 @@ export class AuthenticateUserService {
         try {
             authenticateUserSchema.parse({ email, password });
         } catch (error) {
-            throw new ResponseFormat(500, error.message);
+            return new ResponseFormat(500, error.message);
         }
 
         try {
             const user = await this.usersRepository.findByEmail(email);
 
             if (!user) {
-                throw new ResponseFormat(404, 'User not found');
+                return new ResponseFormat(404, {
+                    message: 'User not found',
+                });
             }
 
             const passwordMatch = await compare(password, user.password);
 
             if (!passwordMatch) {
-                throw new ResponseFormat(401, 'Incorrect password');
+                return new ResponseFormat(401, {
+                    message: 'Incorrect password',
+                });
             }
 
             const secret_token = process.env.SECRET_TOKEN as string;
@@ -48,7 +52,7 @@ export class AuthenticateUserService {
 
             return new ResponseFormat(200, { token, user });
         } catch (error) {
-            throw new ResponseFormat(500, error.message);
+            return new ResponseFormat(500, error.message);
         }
     }
 }
