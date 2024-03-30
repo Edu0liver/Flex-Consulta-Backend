@@ -1,3 +1,4 @@
+import { genSalt, hash } from 'bcrypt';
 import { CreateUserDTO, createUserSchema } from '../../dtos/createUser.dto';
 import { IUsersRepository } from '../../repository/interface/IUsers.repository';
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
@@ -25,6 +26,9 @@ export class CreateUserService {
             if (userAlreadyExists) {
                 throw new ResponseFormat(400, 'User already exists');
             }
+
+            const salt = await genSalt(10);
+            data.password = await hash(data.password, salt);
 
             const user = await this.usersRepository.create(data);
 
