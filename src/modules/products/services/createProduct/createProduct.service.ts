@@ -3,7 +3,7 @@ import {
     CreateProductDTO,
     createProductSchema,
 } from '../../dtos/createProduct.dto';
-import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
+import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 
 @injectable()
@@ -13,19 +13,19 @@ export class CreateProductService {
         private productsRepository: IProductsRepository,
     ) {}
 
-    async execute(data: CreateProductDTO): Promise<ResponseFormat> {
+    async execute(data: CreateProductDTO): Promise<ResponseSender> {
         try {
             createProductSchema.parse(data);
         } catch (error) {
-            return new ResponseFormat(400, { message: error });
+            return new ResponseSender(400, { message: error });
         }
 
         try {
             const product = await this.productsRepository.createProduct(data);
 
-            return new ResponseFormat(201, product);
+            return new ResponseSender(201, product);
         } catch (error) {
-            return new ResponseFormat(500, { message: error.message });
+            return new ResponseSender(500, { message: error.message });
         }
     }
 }

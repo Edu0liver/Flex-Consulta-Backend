@@ -1,7 +1,7 @@
 import { genSalt, hash } from 'bcrypt';
 import { CreateUserDTO, createUserSchema } from '../../dtos/createUser.dto';
 import { IUsersRepository } from '../../repository/interface/IUsers.repository';
-import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
+import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -11,11 +11,11 @@ export class CreateUserService {
         private usersRepository: IUsersRepository,
     ) {}
 
-    async execute(data: CreateUserDTO): Promise<ResponseFormat> {
+    async execute(data: CreateUserDTO): Promise<ResponseSender> {
         try {
             createUserSchema.parse(data);
         } catch (error) {
-            return new ResponseFormat(400, error.message);
+            return new ResponseSender(400, error.message);
         }
 
         try {
@@ -24,7 +24,7 @@ export class CreateUserService {
             );
 
             if (userAlreadyExists) {
-                return new ResponseFormat(400, {
+                return new ResponseSender(400, {
                     message: 'User already exists',
                 });
             }
@@ -34,9 +34,9 @@ export class CreateUserService {
 
             const { id } = await this.usersRepository.create(data);
 
-            return new ResponseFormat(201, { id });
+            return new ResponseSender(201, { id });
         } catch (error) {
-            return new ResponseFormat(500, error.message);
+            return new ResponseSender(500, error.message);
         }
     }
 }

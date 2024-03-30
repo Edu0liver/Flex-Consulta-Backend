@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
+import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { IUsersRepository } from '../../repository/interface/IUsers.repository';
 import {
     AuthenticateUserDTO,
@@ -18,18 +18,18 @@ export class AuthenticateUserService {
     async execute({
         email,
         password,
-    }: AuthenticateUserDTO): Promise<ResponseFormat> {
+    }: AuthenticateUserDTO): Promise<ResponseSender> {
         try {
             authenticateUserSchema.parse({ email, password });
         } catch (error) {
-            return new ResponseFormat(500, error.message);
+            return new ResponseSender(500, error.message);
         }
 
         try {
             const user = await this.usersRepository.findByEmail(email);
 
             if (!user) {
-                return new ResponseFormat(404, {
+                return new ResponseSender(404, {
                     message: 'User not found',
                 });
             }
@@ -37,7 +37,7 @@ export class AuthenticateUserService {
             const passwordMatch = await compare(password, user.password);
 
             if (!passwordMatch) {
-                return new ResponseFormat(401, {
+                return new ResponseSender(401, {
                     message: 'Incorrect password',
                 });
             }
@@ -50,9 +50,9 @@ export class AuthenticateUserService {
                 expiresIn: expires_in_token,
             });
 
-            return new ResponseFormat(200, { token, user });
+            return new ResponseSender(200, { token, user });
         } catch (error) {
-            return new ResponseFormat(500, error.message);
+            return new ResponseSender(500, error.message);
         }
     }
 }

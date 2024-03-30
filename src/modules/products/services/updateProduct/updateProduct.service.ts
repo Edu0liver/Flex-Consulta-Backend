@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
+import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { updateProductSchema } from '../../dtos/updateProduct.dto';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 
@@ -17,11 +17,11 @@ export class UpdateProductService {
         private productsRepository: IProductsRepository,
     ) {}
 
-    async execute({ id, ...data }: IRequest): Promise<ResponseFormat> {
+    async execute({ id, ...data }: IRequest): Promise<ResponseSender> {
         try {
             updateProductSchema.parse(data);
         } catch (error) {
-            return new ResponseFormat(400, { message: error });
+            return new ResponseSender(400, { message: error });
         }
 
         try {
@@ -30,9 +30,9 @@ export class UpdateProductService {
                 data,
             );
 
-            return new ResponseFormat(204, product);
+            return new ResponseSender(204, product);
         } catch (error) {
-            return new ResponseFormat(500, { message: error.message });
+            return new ResponseSender(500, { message: error.message });
         }
     }
 }
