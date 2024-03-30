@@ -1,16 +1,16 @@
 import { inject, injectable } from 'tsyringe';
-import { ProductsRepository } from '../../repository/products.repository';
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 import {
     DeleteProductSchema,
     deleteProductSchema,
 } from '../../dtos/deleteProduct.dto';
+import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 
 @injectable()
 export class DeleteProductService {
     constructor(
         @inject('ProductsRepository')
-        private productsRepository: ProductsRepository,
+        private productsRepository: IProductsRepository,
     ) {}
 
     async execute({ id }: DeleteProductSchema): Promise<ResponseFormat> {

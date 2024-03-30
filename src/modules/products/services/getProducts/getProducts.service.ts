@@ -1,13 +1,13 @@
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 import { GetProductsDTO, getProductsSchema } from '../../dtos/getProducts.dto';
-import { ProductsRepository } from '../../repository/products.repository';
 import { inject, injectable } from 'tsyringe';
+import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 
 @injectable()
 export class GetProductsService {
     constructor(
         @inject('ProductsRepository')
-        private productsRepository: ProductsRepository,
+        private productsRepository: IProductsRepository,
     ) {}
 
     async execute(data: GetProductsDTO): Promise<ResponseFormat> {

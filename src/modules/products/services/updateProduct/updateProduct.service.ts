@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { ProductsRepository } from '../../repository/products.repository';
 import { ResponseFormat } from 'src/shared/providers/ResponseFormat';
 import { updateProductSchema } from '../../dtos/updateProduct.dto';
+import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 
 interface IRequest {
     id: string;
@@ -14,7 +14,7 @@ interface IRequest {
 export class UpdateProductService {
     constructor(
         @inject('ProductsRepository')
-        private productsRepository: ProductsRepository,
+        private productsRepository: IProductsRepository,
     ) {}
 
     async execute({ id, ...data }: IRequest): Promise<ResponseFormat> {

@@ -7,4 +7,5 @@ export interface IProductsRepository {
     getProducts(data: GetProductsDTO): Promise<Product[]>;
     createProduct(data: CreateProductDTO): Promise<Product>;
     updateProduct(id: string, data: UpdateProductDTO): Promise<Product>;
+    deleteProduct(id: string): Promise<Product>;
 }
