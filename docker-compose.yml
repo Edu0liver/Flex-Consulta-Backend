@@ -1,23 +1,7 @@
-version: '3'
+version: '3.8'
 services:
-    api:
-        build: .
-        ports:
-            - '8080:8080'
-        volumes:
-            - .:/app
-        env_file:
-            - .env
-        depends_on:
-            - pgdb
-        links:
-            - pgdb
-        networks:
-            - dbnet
-    pgdb:
-        container_name: pgdb
+    pg:
         image: postgres:14
-        restart: always
         env_file:
             - .env
         environment:
@@ -25,14 +9,33 @@ services:
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_DB=${POSTGRES_DB}
         ports:
-            - '5432:5432'
+            - 5432:5432
         volumes:
-            - postgres-db:/var/lib/postgresql/data
+            - pg-db:/var/lib/postgresql/data
         networks:
-            - dbnet
+            - flexnet
+    rediscache:
+        image: redis:alpine
+        ports:
+            - 6379:6379
+        networks:
+            - flexnet
+    api:
+        build: .
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/usr/app
+        env_file:
+            - .env
+        depends_on:
+            - pg
+            - rediscache
+        networks:
+            - flexnet
 volumes:
-    postgres-db:
+    pg-db:
 
 networks:
-    dbnet:
+    flexnet:
         driver: bridge
