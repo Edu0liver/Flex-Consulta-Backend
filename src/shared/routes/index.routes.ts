@@ -6,5 +6,5 @@ import { ensuredAuthenticated } from '../middleware/ensureAutheticated.middlewar
 
 export const router = Router();
 
-router.use('/products', /*ensuredAuthenticated,*/ productsRoutes);
+router.use('/products', ensuredAuthenticated, productsRoutes);
 router.use('/users', usersRoutes);
