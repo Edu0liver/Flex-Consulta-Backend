@@ -5,9 +5,9 @@ import { IProductsRepository } from '../../repository/interface/IProducts.reposi
 
 interface IRequest {
     id: string;
-    name: string;
-    description: string;
-    price: number;
+    name?: string;
+    description?: string;
+    price?: number;
 }
 
 @injectable()
