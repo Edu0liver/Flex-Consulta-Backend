@@ -1,7 +1,10 @@
 version: '3.8'
 services:
-    pg:
-        image: postgres:14
+    pgdocker:
+        container_name: pgdocker
+        hostname: pgdocker
+        restart: always
+        image: postgres:14-alpine
         env_file:
             - .env
         environment:
@@ -12,15 +15,14 @@ services:
             - 5432:5432
         volumes:
             - pg-db:/var/lib/postgresql/data
-        networks:
-            - flexnet
     rediscache:
+        container_name: rediscache
         image: redis:alpine
         ports:
             - 6379:6379
-        networks:
-            - flexnet
     api:
+        container_name: api
+        hostname: api
         build: .
         ports:
             - 8080:8080
@@ -29,13 +31,7 @@ services:
         env_file:
             - .env
         depends_on:
-            - pg
+            - pgdocker
             - rediscache
-        networks:
-            - flexnet
 volumes:
     pg-db:
-
-networks:
-    flexnet:
-        driver: bridge

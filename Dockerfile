@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:20.9.0
 
 WORKDIR /usr/app
 
@@ -8,10 +8,9 @@ RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
-RUN npx prisma migrate dev
 RUN npm run build
+RUN npx prisma db push --accept-data-loss
 
 EXPOSE 8080
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npm run start" ]
