@@ -22,7 +22,7 @@ export class AuthenticateUserService {
         try {
             authenticateUserSchema.parse({ email, password });
         } catch (error) {
-            return new ResponseSender(500, error.message);
+            return new ResponseSender(400, error.message);
         }
 
         try {

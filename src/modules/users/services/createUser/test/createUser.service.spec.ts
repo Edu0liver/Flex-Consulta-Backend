@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { vi, describe, beforeEach, expect, it } from 'vitest';
 import { CreateUserService } from '../createUser.service';
 import { UsersRepository } from 'src/modules/users/repository/users.repository';
-import { ZodError } from 'zod';
 
 let createUserService: CreateUserService;
 const usersRepositoryMock = new UsersRepository();
@@ -21,7 +20,7 @@ describe('CreateUserService', () => {
         createUserService = new CreateUserService(usersRepositoryMock);
     });
 
-    it('should create a new product', async () => {
+    it('should create a new user', async () => {
         const response = await createUserService.execute({
             email: 'user@email.com',
             password: '7avfh90g78yhff7843',
