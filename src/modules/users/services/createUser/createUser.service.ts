@@ -32,7 +32,7 @@ export class CreateUserService {
             const salt = await genSalt(10);
             data.password = await hash(data.password, salt);
 
-            const { id } = await this.usersRepository.create(data);
+            const { id } = await this.usersRepository.createUser(data);
 
             return new ResponseSender(201, { id });
         } catch (error) {
