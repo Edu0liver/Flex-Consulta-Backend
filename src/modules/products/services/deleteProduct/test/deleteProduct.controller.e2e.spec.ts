@@ -3,7 +3,7 @@ import { app } from '../../../../../shared/server';
 import request from 'supertest';
 
 describe('DeleteProductController', () => {
-    it('should create a product', async () => {
+    it('should delete a product', async () => {
         const res = await request(app)
             .post('/products')
             .send({
