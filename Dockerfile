@@ -14,4 +14,4 @@ RUN npx prisma db push --accept-data-loss
 
 EXPOSE 8080
 
-CMD [ "npm run start" ]
+CMD [ "npm", "run", "start" ]
