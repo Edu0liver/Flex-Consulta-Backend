@@ -2,11 +2,10 @@ import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { IStorageProvider } from 'src/shared/providers/StorageProvider/IStorageProvider';
-
-interface IRequest {
-    id: string;
-    imageName: string;
-}
+import {
+    UploadProductImageDTO,
+    uploadProductImageSchema,
+} from '../../dtos/updateProductImage.dto';
 
 @injectable()
 export class UploadProductImageService {
@@ -17,7 +16,16 @@ export class UploadProductImageService {
         private storageProvider: IStorageProvider,
     ) {}
 
-    async execute({ id, imageName }: IRequest): Promise<ResponseSender> {
+    async execute({
+        id,
+        imageName,
+    }: UploadProductImageDTO): Promise<ResponseSender> {
+        try {
+            uploadProductImageSchema.parse({ id, imageName });
+        } catch (error) {
+            return new ResponseSender(400, { message: error });
+        }
+
         try {
             const product = await this.productsRepository.getProducts({
                 id,
