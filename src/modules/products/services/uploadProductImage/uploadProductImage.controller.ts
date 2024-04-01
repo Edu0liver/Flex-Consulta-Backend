@@ -13,7 +13,7 @@ export class UploadProductImageController {
 
         const { statusCode, data } = await uploadProductImageService.execute({
             id,
-            imageName: image.filename,
+            imageName: image.originalname,
         });
 
         return res.status(statusCode).json(data);

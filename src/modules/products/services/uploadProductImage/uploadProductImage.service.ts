@@ -19,6 +19,18 @@ export class UploadProductImageService {
 
     async execute({ id, imageName }: IRequest): Promise<ResponseSender> {
         try {
+            const product = await this.productsRepository.getProducts({
+                id,
+                page: '1',
+                size: '1',
+            });
+
+            if (!product.length) {
+                return new ResponseSender(404, {
+                    message: 'Product not found!',
+                });
+            }
+
             await this.productsRepository.updateProduct(id, { imageName });
             await this.storageProvider.save(imageName, 'products');
 

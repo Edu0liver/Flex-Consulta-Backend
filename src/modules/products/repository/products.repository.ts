@@ -6,6 +6,7 @@ import { IProductsRepository } from './interface/IProducts.repository';
 
 export class ProductsRepository implements IProductsRepository {
     async getProducts({
+        id,
         name,
         description,
         order_by,
@@ -20,6 +21,7 @@ export class ProductsRepository implements IProductsRepository {
             skip,
             take,
             where: {
+                id,
                 name,
                 description,
                 deleted_at: null,
