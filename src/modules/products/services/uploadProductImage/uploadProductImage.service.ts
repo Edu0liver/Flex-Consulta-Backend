@@ -22,7 +22,9 @@ export class UploadProductImageService {
             await this.productsRepository.updateProduct(id, { imageName });
             await this.storageProvider.save(imageName, 'products');
 
-            return new ResponseSender(200, { message: 'ok' });
+            return new ResponseSender(201, {
+                message: 'Product image registered!',
+            });
         } catch (error) {
             return new ResponseSender(500, { message: error.message });
         }

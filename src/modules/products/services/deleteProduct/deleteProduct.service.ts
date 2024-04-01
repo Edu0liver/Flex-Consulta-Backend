@@ -35,7 +35,9 @@ export class DeleteProductService {
 
             return new ResponseSender(204, product);
         } catch (error) {
-            return new ResponseSender(500, { message: error.message });
+            return new ResponseSender(error.statusCode || 500, {
+                message: error.message,
+            });
         }
     }
 }

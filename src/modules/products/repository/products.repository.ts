@@ -44,7 +44,7 @@ export class ProductsRepository implements IProductsRepository {
 
     async updateProduct(
         id: string,
-        { name, description, price }: UpdateProductDTO,
+        { name, description, price, imageName }: UpdateProductDTO,
     ) {
         return await prismaClient.product.update({
             where: {
@@ -55,6 +55,7 @@ export class ProductsRepository implements IProductsRepository {
                 name,
                 description,
                 price,
+                imageName,
             },
         });
     }
