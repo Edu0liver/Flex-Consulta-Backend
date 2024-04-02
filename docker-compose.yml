@@ -1,8 +1,10 @@
-version: '3.8'
+version: '3'
+
 services:
     rediscache:
         container_name: rediscache
         image: redis
+        restart: always
         ports:
             - 6379:6379
     api:

@@ -6,26 +6,27 @@ Este é um desafio para testar suas habilidades de desenvolvimento de software. 
 
 ## Requisitos
 
--   O sistema deve ser capaz de criar um usuário com nome, email e senha.
--   O sistema deve ser capaz de autenticar um usuário com email e senha.
--   O sistema deve ser capaz de criar um produto com nome, descrição e preço.
--   O sistema deve ser capaz de listar todos os produtos.
--   O sistema deve ser capaz de listar produtos específicos.
--   O sistema deve ser capaz de atualizar um produto.
--   O sistema deve ser capaz de deletar um produto.
+- O sistema deve ser capaz de criar um usuário com nome, email e senha.
+- O sistema deve ser capaz de autenticar um usuário com email e senha.
+- O sistema deve ser capaz de criar um produto com nome, descrição e preço.
+- O sistema deve ser capaz de listar todos os produtos.
+- O sistema deve ser capaz de listar produtos específicos.
+- O sistema deve ser capaz de atualizar um produto.
+- O sistema deve ser capaz de deletar um produto.
 
 ## Regras
 
--   O usuário deve estar autenticado para criar, listar, atualizar ou deletar um produto.
--   O usuário só pode utilizar o sistema de gerenciamento de produtos se ele estiver autenticado.
+- O usuário deve estar autenticado para criar, listar, atualizar ou deletar um produto.
+- O usuário só pode utilizar o sistema de gerenciamento de produtos se ele estiver autenticado.
 
 ## Tecnologias
 
--   Node.js
--   Express
--   Postgres
--   Prisma
--   JWT
+- Node.js _20.9.0_
+- Express
+- Postgres _14.11_
+- Redis (Optional) _7.0_
+- Prisma
+- JWT
 
 ## Processos de Instalação
 
@@ -93,15 +94,15 @@ npm run start
 
 _Body:_
 
--   email: email do usuário
--   password: senha do usuário
+- email: email do usuário
+- password: senha do usuário
 
 #### POST /users/login
 
 _Body:_
 
--   email: email do usuário
--   password: senha do usuário
+- email: email do usuário
+- password: senha do usuário
 
 ### Produtos
 
@@ -111,48 +112,48 @@ Todas os endpoints de produtos necessitam de autenticação, passando o token no
 
 _Query Params:_
 
--   page: número da página
--   size: quantidade de produtos por página
--   name: nome do produto
--   description: descrição do produto
--   order_by: campo para ordenação
--   order: tipo de ordenação ("ASC" ou "DESC")
+- page: número da página
+- size: quantidade de produtos por página
+- name: nome do produto
+- description: descrição do produto
+- order_by: campo para ordenação
+- order: tipo de ordenação ("ASC" ou "DESC")
 
 #### POST /products
 
 _Body:_
 
--   name: nome do produto
--   description: descrição do produto
--   price: preço do produto
+- name: nome do produto
+- description: descrição do produto
+- price: preço do produto
 
 #### POST /products/image/:id
 
 _Params:_
 
--   id: id do produto
+- id: id do produto
 
 _Form:_
 
--   image: imagem do produto
+- image: imagem do produto
 
 #### PUT /products/:id
 
 _Params:_
 
--   id: id do produto
+- id: id do produto
 
 _Body:_
 
--   name: nome do produto
--   description: descrição do produto
--   price: preço do produto
+- name: nome do produto
+- description: descrição do produto
+- price: preço do produto
 
 #### DELETE /products/:id
 
 _Params:_
 
--   id: id do produto
+- id: id do produto
 
 ## Testes
 
@@ -164,4 +165,4 @@ npm run test
 
 ## Autor
 
--   [Eduardo Oliveira Alves](https://www.linkedin.com/in/eduoliveiralves/)
+- [Eduardo Oliveira Alves](https://www.linkedin.com/in/eduoliveiralves/)
