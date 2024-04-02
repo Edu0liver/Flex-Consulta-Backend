@@ -50,7 +50,9 @@ export class AuthenticateUserService {
                 expiresIn: expires_in_token,
             });
 
-            return new ResponseSender(200, { token, user });
+            const { password: _, ...userWithoutPassword } = user;
+
+            return new ResponseSender(200, { token, user: userWithoutPassword });
         } catch (error) {
             return new ResponseSender(500, error.message);
         }
