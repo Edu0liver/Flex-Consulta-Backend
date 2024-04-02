@@ -3,6 +3,7 @@ import { GetProductsDTO, getProductsSchema } from '../../dtos/getProducts.dto';
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
 import { redisClient } from 'src/shared/config/redis.config';
+import Redis from 'ioredis';
 
 @injectable()
 export class GetProductsService {
@@ -31,7 +32,7 @@ export class GetProductsService {
         }
 
         try {
-            const cacheProducts = await redisClient.get(
+            const cacheProducts = await redisClient?.get(
                 `products:page=${data.page}`,
             );
 
@@ -41,7 +42,7 @@ export class GetProductsService {
 
             const products = await this.productsRepository.getProducts(data);
 
-            await redisClient.set(
+            await redisClient?.set(
                 `products:page=${data.page}`,
                 JSON.stringify(products),
                 'EX',

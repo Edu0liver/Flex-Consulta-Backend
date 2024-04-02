@@ -4,7 +4,7 @@ import { GetProductsController } from '../../modules/products/services/getProduc
 import { CreateProductController } from '../../modules/products/services/createProduct/createProduct.controller';
 import { UpdateProductController } from 'src/modules/products/services/updateProduct/updateProduct.controller';
 import { DeleteProductController } from 'src/modules/products/services/deleteProduct/deleteProduct.controller';
-import { uploadConfig } from 'src/shared/config/uploadFiles';
+import { uploadConfig } from 'src/shared/config/uploadFiles.config';
 import { UploadProductImageController } from 'src/modules/products/services/uploadProductImage/uploadProductImage.controller';
 
 export const productsRoutes = Router();

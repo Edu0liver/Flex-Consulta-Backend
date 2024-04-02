@@ -1,7 +1,7 @@
 import { IStorageProvider } from '../IStorageProvider';
 import { S3 } from 'aws-sdk';
 import { resolve } from 'path';
-import { uploadConfig } from 'src/shared/config/uploadFiles';
+import { uploadConfig } from 'src/shared/config/uploadFiles.config';
 import * as fs from 'node:fs';
 import mime from 'mime';
 

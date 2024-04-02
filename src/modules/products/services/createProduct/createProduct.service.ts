@@ -5,6 +5,7 @@ import {
 } from '../../dtos/createProduct.dto';
 import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
+import { redisClient } from 'src/shared/config/redis.config';
 
 @injectable()
 export class CreateProductService {
@@ -22,6 +23,8 @@ export class CreateProductService {
 
         try {
             const product = await this.productsRepository.createProduct(data);
+
+            await redisClient?.flushdb();
 
             return new ResponseSender(201, product);
         } catch (error) {

@@ -2,7 +2,7 @@ version: '3.8'
 services:
     rediscache:
         container_name: rediscache
-        image: redis:alpine
+        image: redis
         ports:
             - 6379:6379
     api:
@@ -17,5 +17,3 @@ services:
             - .env
         depends_on:
             - rediscache
-volumes:
-    pg-db:

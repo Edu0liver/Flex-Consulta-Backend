@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import { resolve } from 'node:path';
 import { IStorageProvider } from '../IStorageProvider';
-import { uploadConfig } from 'src/shared/config/uploadFiles';
+import { uploadConfig } from 'src/shared/config/uploadFiles.config';
 
 export class LocalStorageProvider implements IStorageProvider {
     async save(file: string, folder: string): Promise<string> {
