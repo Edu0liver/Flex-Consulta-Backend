@@ -2,6 +2,7 @@ import { ResponseSender } from 'src/shared/providers/ResponseSender';
 import { GetProductsDTO, getProductsSchema } from '../../dtos/getProducts.dto';
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../../repository/interface/IProducts.repository';
+import { redisClient } from 'src/shared/config/redis.config';
 
 @injectable()
 export class GetProductsService {
@@ -30,7 +31,22 @@ export class GetProductsService {
         }
 
         try {
+            const cacheProducts = await redisClient.get(
+                `products:page=${data.page}`,
+            );
+
+            if (cacheProducts) {
+                return new ResponseSender(200, JSON.parse(cacheProducts));
+            }
+
             const products = await this.productsRepository.getProducts(data);
+
+            await redisClient.set(
+                `products:page=${data.page}`,
+                JSON.stringify(products),
+                'EX',
+                60,
+            );
 
             return new ResponseSender(200, products);
         } catch (error) {
